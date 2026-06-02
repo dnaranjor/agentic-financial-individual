@@ -1,0 +1,154 @@
+{
+  "_meta": {
+    "version": 1,
+    "created_at": "2026-06-02",
+    "updated_at": "2026-06-02",
+    "language": "es-CL",
+    "currency_base": "CLP"
+  },
+  "_provenance": {
+    "source": "initial-system-spec",
+    "ingested_files": []
+  },
+  "objective": {
+    "target_retirement_age": 67,
+    "retirement_goal": "Mantener el estilo de vida actual ajustado por inflación",
+    "estimated_life_expectancy": 90
+  },
+  "personal": {
+    "client": {
+      "sex": "male",
+      "age": 58,
+      "nationalities": ["chilena", "venezolana"],
+      "residence": "Chile",
+      "profession": "Ingeniero en Computación",
+      "marital_status": "Casado en sociedad conyugal",
+      "employment_status": "Empleado tiempo completo en empresa de tecnología",
+      "health_coverage": "FONASA",
+      "rsh_bracket_pct": 100
+    },
+    "spouse": {
+      "sex": "female",
+      "age": 57,
+      "health_coverage": "FONASA",
+      "rsh_bracket_pct": 70
+    },
+    "dependents": {
+      "adult_children": 3,
+      "financially_dependent_at_retirement": false
+    }
+  },
+  "insurance": {
+    "personal_accident_full": {
+      "annual_premium_uf": 6,
+      "source": "https://www.bancoestado.cl/content/bancoestado-public/cl/es/home/home/productos-/corredores-de-seguros-bancoestado---bancoestado/listado-de-seguros/seguro-accidentes-personales---bancoestado-corredora-de-seguros.html"
+    },
+    "falp_oncologico": {
+      "monthly_premium_clp": 17600,
+      "source": "https://www.falp.org/convenio-oncologico/diagnostico-y-tratamiento-innovacion-y-tecnologia-al-servicio-del-paciente/"
+    },
+    "auto_full_deducible_uf3": {
+      "monthly_premium_uf": 1.723,
+      "source": "https://www.itau.cl/personas/seguros/seguro-automotriz"
+    }
+  },
+  "monthly_income_clp": {
+    "client_net_salary": 4500000,
+    "spouse_net_salary": 520000,
+    "rental_income": 200000,
+    "tax_refund_monthly_equivalent": 25000
+  },
+  "monthly_expenses_clp": {
+    "household_approx": 2000000,
+    "personal_approx": 2000000,
+    "vehicle_approx": 250000,
+    "other_approx": 200000
+  },
+  "detailed_expenses_clp": {
+    "debt_personal_loans_elnaranjal": {
+      "amount": 900000,
+      "note": "Préstamos personales próximos a finalizar en junio 2026"
+    },
+    "groceries_household": 878956,
+    "mortgage_quinta_avenida_1270": 572042,
+    "housing": 843358,
+    "dining_out_delivery": 503952,
+    "personal_family": 391101,
+    "car_transport": 289721,
+    "insurance": 68471
+  },
+  "savings_investments": {
+    "afp_mandatory": {
+      "client": {
+        "afp": "Planvital",
+        "fund": "B",
+        "balance_clp": 39507196,
+        "monthly_contribution_clp": 375000
+      },
+      "spouse": {
+        "afp": "Planvital",
+        "fund": "C",
+        "balance_clp": 6461483,
+        "monthly_contribution_clp": 73800
+      }
+    },
+    "apv": {
+      "client_regime_a_fund_b_clp": 230692,
+      "client_regime_b_fund_b_clp": 684069,
+      "spouse_regime_a_fund_b_clp": 159374
+    },
+    "time_deposits": {
+      "client_itau_usd": {"amount": 18341, "rate_annual": 0.0345},
+      "client_itau_clp": {"amount": 10188823, "rate_annual": 0.0408},
+      "spouse_bci_usd": {"amount": 13392, "rate_annual": 0.043},
+      "spouse_bci_clp": {"amount": 4010449, "rate_annual": 0.048}
+    },
+    "crypto": {
+      "btc": 0.00031492
+    },
+    "digital_savings": {
+      "mercadopago_clp": {"amount": 1348100, "rate_annual": 0.043, "compounding": "daily"}
+    },
+    "vector_capital_usd": {
+      "SRET": 46.31859733,
+      "SCHY": 39.27328116,
+      "SCHD": 34.20661427,
+      "VNQI": 4.97527292,
+      "VYMI": 4.59480943,
+      "WDIV": 2.17481233,
+      "XLU": 1.84173368,
+      "AVUV": 1.19520134,
+      "cash_usd": 4.35
+    },
+    "vector_capital_clp": {
+      "ENELAM": 5810,
+      "CHILE": 3790,
+      "LTM": 2990,
+      "VAPORES": 265,
+      "COLBUN": 227,
+      "CFIETFCC": 86,
+      "CFINRENTAS": 75,
+      "QUINENO": 42,
+      "CFMITNIPSA": 8
+    },
+    "fidelity_espp_usd": {
+      "EFX_shares": 26.0287,
+      "cash_usd": 1151.67
+    }
+  },
+  "assets": {
+    "main_residence_clp_estimated": 160000000,
+    "real_estate_investment_clp_estimated": 35000000,
+    "vehicle": {
+      "model": "Nissan Versa 2022",
+      "estimated_value_clp": 11000000
+    }
+  },
+  "debts": {
+    "mortgage_main_residence": {
+      "outstanding_balance_uf": 1236.19,
+      "fixed_annual_rate_pct": 2.84,
+      "remaining_installments": 100
+    }
+  }
+}
