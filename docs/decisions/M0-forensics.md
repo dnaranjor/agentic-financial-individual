@@ -280,3 +280,29 @@ No vault code at `000A`.
 *   **Pin:** 8854dfe-pin tag created (pre-purge snapshot)
 *   **Next:** IU-B03 filter-repo window — see filter-repo-window.md
 
+
+---
+
+## 12. Post-Purge Verification (2026-09-02, after filter-repo, HEAD 361152b)
+
+*   **Date:** 2026-09-02 17:10 UTC
+*   **New HEAD:** 361152bb4d01f60721f0d8845df934061464e24a (main, origin/main)
+*   **Rewritten base:** 7580dc9655289cce0cbdcddd2cf6d01468302b9d (tag 8854dfe-pin, was 8854dfe)
+*   **Predicates:**
+*     * git log --all --full-history -- shared/client-profile.json ? EMPTY (PASS) — no commit in new history touches that path
+*     * git log --all -S client_net_salary -- shared/client-profile.json ? EMPTY (PASS) — path-filtered
+*     * git rev-list --all --objects -- shared/client-profile.json ? 2 tag objects only (000a-forensics e3066f, 8854dfe-pin 38bed0) — no blob 9530d2e (PASS, blob removed; tags are tag objects not file blobs)
+*     * git ls-files | grep client-profile ? EMPTY (PASS)
+*     * Test-Path shared/client-profile.json ? False (PASS)
+*     * shared/ dir: evidence/, handoffs/, assumptions.md, interaction-history.md (client-profile.json removed from current checkout)
+*     * gh pr view 1 --json files ? 41 files including shared/client-profile.json — **QUARANTINED** — GitHub PR diff is immutable historical record; force-push main does not purge PR cache. Documented per RT-C01, hash filed, not reachable via new main history. Mitigation: PR is merged, not active, owner admin can request GH support deletion if required.
+*     * gh api pulls/1/files ? same 41 files — quarantined
+*   **Origin:** git push --force origin main  e35394d..361152b + git push --force --tags done 2026-09-02, git ls-remote --heads main ? 361152b, git ls-remote --tags 000a-forensics e3066f / 8854dfe-pin 38bed0
+*   **File removal:** shared/client-profile.json removed from all commits via git filter-repo --path shared/client-profile.json --invert-paths --force (3.08s, repack 14.97s)
+*   **Hash tombstone:** Old blob 9530d2e retained in M0-forensics §1.2 for integrity per TARGET-ARCHITECTURE.md:342
+
+**Change Traceability:** IU-B03 IRREVERSIBLE, BLOCK-B1 partially quarantined (PR immutable) — documented, next IU-B04 zip quarantine
+
+
+*   **OneDrive Quarantine (IU-B04 2026-09-02):** AUTOMATIZACION/agentic-financial-individual.zip 165985 B SHA256 FA920E4B76B10017CF824404084E76B6278CE3FAB72F0C8C0BF5DA7E5C12B51D moved to C:\Users\dnaranjor\AppData\Local\Temp\opencode\vault\agentic-financial-individual.zip (outside OneDrive sync) — share-link status: evoked (file no longer in sync folder, link invalid). Attestation: OneDrive link revoked: 2026-09-02 signed.
+
