@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/claim.json",
+  "title": "Claim — proposition coexisting with conflicts",
+  "description": "Status proposed|accepted|rejected|superseded. Conflicting claims coexist.",
+  "type": "object",
+  "propertyNames": {
+    "not": {
+      "pattern": "^jurisdiction"
+    }
+  },
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "proposition": {
+      "type": "string"
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": ["proposed", "accepted", "rejected", "superseded"]
+    }
+  },
+  "required": ["id", "proposition", "sourceRefs", "status", "ontologyVersion"],
+  "additionalProperties": false
+}

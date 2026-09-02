@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/observation.json",
+  "title": "Observation — structured reading of one Evidence",
+  "description": "Id = (evidence hash, extractor version, time). Confidence required.",
+  "type": "object",
+  "propertyNames": {
+    "not": {
+      "pattern": "^jurisdiction"
+    }
+  },
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "evidenceHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "extractorVersion": {
+      "type": "string"
+    },
+    "extractedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "value": {
+      "type": ["string", "number", "object"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": ["id", "evidenceHash", "extractorVersion", "extractedAt", "value", "confidence", "ontologyVersion"],
+  "additionalProperties": false
+}

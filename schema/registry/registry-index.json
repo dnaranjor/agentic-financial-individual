@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/registry-index.json",
+  "title": "Registry Index — $ref graph",
+  "description": "Lists all registry schemas. Every schema carries ontologyVersion v1.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "schemas": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "unit.json",
+          "measure.json",
+          "evidence.json",
+          "observation.json",
+          "claim.json",
+          "accepted-fact.json",
+          "assumption.json",
+          "assumption-set.json",
+          "market-observation.json",
+          "derived-value.json",
+          "finding.json",
+          "recommendation.json",
+          "analysis-record.json",
+          "person-household.json"
+        ]
+      },
+      "minItems": 13
+    }
+  },
+  "required": ["ontologyVersion", "schemas"]
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/recommendation.json",
+  "title": "Recommendation — proposed course with falsification",
+  "description": "May reference only DerivedValue IDs. B-7.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "derivedValueRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "falsificationConditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "expiry": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": ["id", "rationale", "derivedValueRefs", "falsificationConditions", "expiry", "ontologyVersion"],
+  "additionalProperties": false
+}

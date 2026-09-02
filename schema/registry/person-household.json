@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/person-household.json",
+  "title": "Person/Household/Ownership/Goal — structural core",
+  "description": "B-4 core never references jurisdiction. BirthDate not age.",
+  "type": "object",
+  "propertyNames": {
+    "not": {
+      "pattern": "^jurisdiction"
+    }
+  },
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "persons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "propertyNames": {
+          "not": {
+            "pattern": "^jurisdiction"
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "nationality": {
+            "type": "string"
+          },
+          "income": {
+            "type": "object",
+            "properties": {
+              "net_salary": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "$ref": "unit.json"
+                  },
+                  "basis": {
+                    "$ref": "measure.json#/properties/basis"
+                  },
+                  "income_semantics": {
+                    "enum": ["gross", "net_of_afp", "net_of_afp_and_health"],
+                    "description": "U-04 typed mandatory"
+                  }
+                },
+                "required": ["value", "unit", "basis", "income_semantics"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["net_salary"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["id", "birthDate", "income"],
+        "additionalProperties": false
+      }
+    },
+    "household": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "required": ["id", "members"]
+    },
+    "ownership": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "share": {
+            "type": "number"
+          }
+        },
+        "required": ["personId", "share"]
+      }
+    }
+  },
+  "required": ["persons", "household", "ontologyVersion"],
+  "additionalProperties": false,
+  "not": {
+    "required": ["jurisdiction_rule"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/unit.json",
+  "title": "Unit — partition currency | index_unit | instrument_qty",
+  "description": "TAD-06: UF is index_unit not currency. Every quantitative field carries unit+basis.",
+  "type": "string",
+  "enum": [
+    "CURRENCY_CLP",
+    "CURRENCY_USD",
+    "INDEX_UF",
+    "INSTRUMENT_QTY",
+    "RATIO"
+  ]
+}

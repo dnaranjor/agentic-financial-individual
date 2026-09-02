@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/measure.json",
+  "title": "Measure — value + unit + MeasureBasis",
+  "description": "TAD-06: MeasureBasis = (unit, nominal|real, basePeriod, asOf). Aggregation requires identical basis.",
+  "type": "object",
+  "propertyNames": {
+    "not": {
+      "pattern": "^jurisdiction"
+    }
+  },
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1",
+      "description": "every record carries ontologyVersion per docs/ontology/v1.md"
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "$ref": "unit.json"
+    },
+    "basis": {
+      "type": "object",
+      "required": ["unit", "type", "basePeriod", "asOf"],
+      "properties": {
+        "unit": {
+          "$ref": "unit.json"
+        },
+        "type": {
+          "enum": ["nominal", "real"]
+        },
+        "basePeriod": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "description": "base period YYYY-MM"
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date",
+          "description": "as of date YYYY-MM-DD"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["value", "unit", "basis", "ontologyVersion"],
+  "additionalProperties": false
+}

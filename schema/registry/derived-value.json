@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/derived-value.json",
+  "title": "DerivedValue — deterministic output with provenance",
+  "description": "Every figure shown to principal. Carries full provenance.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "$ref": "unit.json"
+    },
+    "basis": {
+      "$ref": "measure.json#/properties/basis"
+    },
+    "formulaId": {
+      "type": "string"
+    },
+    "inputRefs": {
+      "type": "object",
+      "properties": {
+        "snapshotId": {
+          "type": "string"
+        },
+        "assumptionSetVersion": {
+          "type": "string"
+        },
+        "ruleVersions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["snapshotId", "assumptionSetVersion"]
+    },
+    "engineVersion": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "value", "unit", "basis", "formulaId", "inputRefs", "engineVersion", "ontologyVersion"],
+  "additionalProperties": false
+}

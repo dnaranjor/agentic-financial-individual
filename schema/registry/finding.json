@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/finding.json",
+  "title": "Finding — risk/inconsistency with severity",
+  "description": "Gate authority: Critico blocks.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "severity": {
+      "enum": ["Critico", "Alto", "Medio", "Bajo"]
+    },
+    "triggeredBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "severity", "triggeredBy", "ontologyVersion"],
+  "additionalProperties": false
+}

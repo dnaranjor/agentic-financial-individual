@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/accepted-fact.json",
+  "title": "AcceptedFact — bitemporal household fact",
+  "description": "validFrom/validTo × recordedAt. Sole writer HSS (B-2).",
+  "type": "object",
+  "propertyNames": {
+    "not": {
+      "pattern": "^jurisdiction"
+    }
+  },
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "claimRef": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "validFrom": {
+      "type": "string",
+      "format": "date"
+    },
+    "validTo": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "recordedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "value": {
+      "type": "object"
+    }
+  },
+  "required": ["id", "claimRef", "validFrom", "recordedAt", "value", "ontologyVersion"],
+  "additionalProperties": false
+}

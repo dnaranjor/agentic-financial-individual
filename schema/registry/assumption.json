@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/assumption.json",
+  "title": "Assumption — forward-looking parameter",
+  "description": "Versioned with owner, justification, optional evidence links. Separate lineage from facts.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "param": {
+      "type": "string",
+      "examples": ["inflation", "return", "longevity", "fxPath"]
+    },
+    "value": {
+      "type": "number"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "justification": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": ["id", "param", "value", "owner", "justification", "version", "ontologyVersion"],
+  "additionalProperties": false
+}

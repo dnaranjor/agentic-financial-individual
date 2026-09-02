@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/analysis-record.json",
+  "title": "AnalysisRecord — immutable bundle",
+  "description": "Replaces overwrite-on-rerun handoffs. Byte-identical replay.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "snapshotId": {
+      "type": "string"
+    },
+    "assumptionSetVersion": {
+      "type": "string"
+    },
+    "ruleVersions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "engineVersion": {
+      "type": "string"
+    },
+    "derivedValues": {
+      "type": "array",
+      "items": {
+        "$ref": "derived-value.json"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "finding.json"
+      }
+    }
+  },
+  "required": ["id", "snapshotId", "assumptionSetVersion", "engineVersion", "derivedValues", "ontologyVersion"],
+  "additionalProperties": false
+}

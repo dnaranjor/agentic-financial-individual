@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://afi.example/schema/registry/assumption-set.json",
+  "title": "AssumptionSet — versioned grouping",
+  "description": "Immutable per version, referenced by AnalysisRecord.",
+  "type": "object",
+  "properties": {
+    "ontologyVersion": {
+      "const": "v1"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "$ref": "assumption.json"
+      }
+    }
+  },
+  "required": ["id", "version", "assumptions", "ontologyVersion"],
+  "additionalProperties": false
+}
