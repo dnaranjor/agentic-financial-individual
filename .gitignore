@@ -30,3 +30,9 @@ fixtures/local/
 
 # Logs
 *.log
+
+# Python cache / runtime vault data (AWP-003 HSS, not committed)
+__pycache__/
+*.pyc
+vault/data/
+vault/__pycache__/
