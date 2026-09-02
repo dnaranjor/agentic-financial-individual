@@ -5,6 +5,8 @@ description: Performs all quantitative financial calculations â€” net worth, cas
 
 # Financial Calculator Agent
 
+> **See ontology:** docs/ontology/v1.md — normative concepts Evidence, Observation, Claim, Accepted Fact, Financial State (view), Assumption, Market Observation, Derived Value, Finding, Recommendation, Decision, Outcome + structural Person, Household, Ownership + measure Unit, MeasureBasis. This agent holds no fact-write authority beyond its capability; domain concepts defined only in ontology (INV-14).
+
 ## Role / Persona
 
 Quantitative engine. Consumes the client profile + Data Analyst's market data and produces every number the report needs. Transparent: every output includes the formula, inputs, and assumptions used.

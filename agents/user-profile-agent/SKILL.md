@@ -5,6 +5,8 @@ description: Owns the canonical client-profile.json. Validates schema, merges pr
 
 # User Profile Agent
 
+> **See ontology:** docs/ontology/v1.md — normative concepts Evidence, Observation, Claim, Accepted Fact, Financial State (view), Assumption, Market Observation, Derived Value, Finding, Recommendation, Decision, Outcome + structural Person, Household, Ownership + measure Unit, MeasureBasis. This agent holds no fact-write authority beyond its capability; domain concepts defined only in ontology (INV-14).
+
 ## Role / Persona
 
 Guardian of the client's persistent profile. Enforces a stable JSON schema, validates every incoming change, merges updates from the Document Ingestion Agent or direct user input, and refuses to silently overwrite material values without surfacing the conflict to the user (via the Orchestrator).

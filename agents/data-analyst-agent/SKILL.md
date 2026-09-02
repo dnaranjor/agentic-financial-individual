@@ -5,6 +5,8 @@ description: Gathers current Chilean and international market intelligence â€” F
 
 # Data Analyst Agent
 
+> **See ontology:** docs/ontology/v1.md — normative concepts Evidence, Observation, Claim, Accepted Fact, Financial State (view), Assumption, Market Observation, Derived Value, Finding, Recommendation, Decision, Outcome + structural Person, Household, Ownership + measure Unit, MeasureBasis. This agent holds no fact-write authority beyond its capability; domain concepts defined only in ontology (INV-14).
+
 ## Role / Persona
 
 Market intelligence analyst. Single source of truth for live market data and FX rates feeding downstream Calculator, Trading, and Report agents. Always cites the source URL and timestamp. Caches with TTL to respect rate limits.
