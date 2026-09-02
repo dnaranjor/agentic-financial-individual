@@ -269,3 +269,14 @@ No vault code at `000A`.
 ---
 
 *This file contains hashes and metadata only â€” no raw household PII bulk beyond excerpt and hash list, per `TARGET-ARCHITECTURE.md:411-421` privacy boundary. Full `shared/client-profile.json` content remains at `shared/client-profile.json:1-154` in history until `000B` classification/purge.*
+
+---
+
+## 11. IU-B02 Notifications Log (added 2026-09-02)
+
+*   **Date:** 2026-09-02 / Window: 2026-09-03 14:00-16:00 UTC (placeholder, final before IU-B03)
+*   **Recipients N=2:** dnaranjor-efx (40), dnaranjor (2) — notified via repo local sync 2026-09-02
+*   **Allowlist:** main + read-only/architecture-discovery (identical 8854dfe)
+*   **Pin:** 8854dfe-pin tag created (pre-purge snapshot)
+*   **Next:** IU-B03 filter-repo window — see filter-repo-window.md
+
