@@ -1,0 +1,9 @@
+# AFI — AWP-000A Immediate Containment: normalize line endings (RT-L02, COND-A2)
+# Traceability: STAGE-8-PLAN-DELTA.md:7.1/9.1 000A:12.3, AWP-000A IU-002
+# OneDrive sync-on-close may reintroduce CRLF; this mitigates with docs/runbooks exclusion at IU-003
+
+* text=auto eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+*.py text eol=lf

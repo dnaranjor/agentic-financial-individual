@@ -1,1 +1,32 @@
+# OS / Editor
 .DS_Store
+Thumbs.db
+
+# AFI — AWP-000A Immediate Containment: exposure hardening (STAGE-8-PLAN-DELTA.md:7.1, 000A:12.2)
+# Purpose: prevent future commits of household exposure artifacts / derived runtime artifacts
+# Traceability: ADR-023/TAD-15, RT-C01, CHG-002/014, AWP-000A IU-002
+
+# Household exposure — historical path (tracked at 8854dfe, now ignored for future)
+shared/client-profile.json
+
+# Runtime handoffs / evidence (overwrite-on-rerun, would destroy provenance if committed)
+shared/handoffs/*.md
+shared/evidence/*.json
+shared/.cache/
+shared/baseline-report.md
+
+# Reports / interaction history runtime outputs
+reports/*.md
+shared/interaction-history.md
+
+# Synthetic fixture local overrides (committed fixture at 000B: fixtures/synthetic/, local drafts ignored)
+fixtures/local/
+*.tmp
+*.lock
+
+# Filesystem exposure vector — OneDrive zip (RT-L01, 000B quarantine; ignore if re-copied)
+*.zip
+# Keep the canonical zip reference hash in M0-forensics.md, not the file
+
+# Logs
+*.log
