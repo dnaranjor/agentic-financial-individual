@@ -98,7 +98,17 @@ approved: 2026-09-02 by Principal + Reviewer (this file)
 ```
 
 * **GATE-001 (U-01) → 000B (this AWP) — PASS (real/unverified drives purge)**
-* **GATE-002 (U-04) → 001 — OPEN but machine predicate decided (`net_of_afp_and_health` enum)**
+* **GATE-002 (U-04) → 001 — CLOSED at AWP-001 (ratified in docs/ontology/v1.md:8 as typed enum `gross|net_of_afp|net_of_afp_and_health`, source payroll still OPEN→009)**
+
+---
+
+## WP-001 Closure — Income Semantics Ratified (2026-09-02)
+
+**AWP:** `AWP-001 — Conceptual Core Ratification (M1)` `IU-001`  
+**Closure:** `income_semantics` now **typed mandatory** in `docs/ontology/v1.md:7-8` as `income.net_salary {value, unit:CURRENCY_CLP, basis:MeasureBasis, income_semantics: net_of_afp_and_health}` enum `gross|net_of_afp|net_of_afp_and_health`. Migration continuity `4500000 → 5245000` synthetic example per `IMPLEMENTATION-ARCHITECTURE-AND-MIGRATION-PLAN.md:936` delta doc.  
+**Traceability:** `M0-answers.md:52` `OPEN→WP-001` → `docs/ontology/v1.md:8` → `AWP-002:12.6` machine predicate (next).  
+**Owner:** Principal + Tech Lead. **Residual:** payroll source (AFP planilla) still `OPEN→009` elicitation.  
+**Sign-off WP-001 IU-001:** Principal Dennis J. Naranjo 2026-09-02 — ontology closure reviewed.
 
 ---
 
