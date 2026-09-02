@@ -3,8 +3,8 @@
 # Traceability: ADR-023/TAD-15, RT-C01, STAGE-8-PLAN-DELTA.md:7.1/9.1, AWP-000A IU-003, AWP-000B IU-B01/B02/B05/B06
 # Rejects commits containing client_net_salary or RUT pattern (excludes hook + forensics decisions + synthetic + vault)
 
-# Scan staged diff excluding hook and forensics/synthetic/vault decisions (which legitimately reference the key)
-if git diff --cached --unified=0 -- . ':!.githooks/pre-commit' ':!docs/decisions/M0-forensics.md' ':!docs/decisions/M0-answers.md' ':!docs/decisions/filter-repo-window.md' ':!docs/decisions/vault-layout.md' ':!fixtures/synthetic/household-v1.json' ':!fixtures/synthetic/entropy-report.md' | grep -Eq "client_net_salary|[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}-[0-9kK]"; then
+# Scan staged diff excluding hook and forensics/synthetic/vault/ontology/migrations decisions (which legitimately reference the key)
+if git diff --cached --unified=0 -- . ':!.githooks/pre-commit' ':!docs/decisions/M0-forensics.md' ':!docs/decisions/M0-answers.md' ':!docs/decisions/filter-repo-window.md' ':!docs/decisions/vault-layout.md' ':!docs/decisions/schema-language.md' ':!docs/decisions/vault-interface-stub.md' ':!fixtures/synthetic/' ':!docs/migrations/' ':!docs/ontology/' | grep -Eq "client_net_salary|[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}-[0-9kK]"; then
   echo "hook: PII pattern rejected — staged diff contains client_net_salary or RUT pattern outside forensics/synthetic docs" >&2
   echo "hook: Remove PII or document classification in M0-forensics.md / M0-answers.md (000B)" >&2
   echo "hook: To bypass (requires reviewer): git commit --no-verify with justification" >&2

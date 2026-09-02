@@ -1,0 +1,35 @@
+{
+  "ontologyVersion": "v1",
+  "uf_as_index_unit": {
+    "value": 39405,
+    "unit": "INDEX_UF",
+    "basis": {
+      "unit": "INDEX_UF",
+      "type": "nominal",
+      "basePeriod": "2026-09",
+      "asOf": "2026-09-02"
+    }
+  },
+  "uf_in_clp_incorrect_would_be": {
+    "_comment": "This fixture shows CORRECT usage. Negative test UF→CURRENCY_CLP must fail per 002:12.3 — see validation-report.md",
+    "value": 39405,
+    "unit": "INDEX_UF",
+    "basis": {
+      "unit": "INDEX_UF",
+      "type": "nominal",
+      "basePeriod": "2026-09",
+      "asOf": "2026-09-02"
+    }
+  },
+  "clp_currency_correct": {
+    "value": 5245000,
+    "unit": "CURRENCY_CLP",
+    "basis": {
+      "unit": "CURRENCY_CLP",
+      "type": "real",
+      "basePeriod": "2026-06",
+      "asOf": "2026-06-01"
+    },
+    "income_semantics": "net_of_afp_and_health"
+  }
+}
