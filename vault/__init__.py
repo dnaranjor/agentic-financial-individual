@@ -1,49 +1,63 @@
-"""Vault port — stub mock for AWP-003 (AWP-008 will harden)
+"""Vault port — hardened Fernet (AWP-008)
 
-Traceability: docs/decisions/vault-interface-stub.md, STAGE-8-PLAN-DELTA.md:8.1
+Traceability: docs/decisions/vault-interface-stub.md, STAGE-8-PLAN-DELTA.md:8.1, AWP-008 IU-001
 Interface: encrypt(payload: bytes, scope: str, key_ref: str) -> str
+Hardening: Fernet (cryptography) at-rest, not mock base64. Key in vault/keys/vault.key (ignored), data in vault/data/<scope>/<id>.enc (ignored).
 """
 import base64
-import json
 from pathlib import Path
+from cryptography.fernet import Fernet
 
 VAULT_DIR = Path(__file__).parent / "data"
+KEYS_DIR = Path(__file__).parent / "keys"
 VAULT_DIR.mkdir(parents=True, exist_ok=True)
+KEYS_DIR.mkdir(parents=True, exist_ok=True)
 
-def encrypt(payload: bytes, scope: str, key_ref: str = "mock-key") -> str:
-    # mock "encryption" — base64, stored as file vault/data/<scope>/<key_ref>.enc
-    # In real 008, this will be real crypto + outside OneDrive.
-    b64 = base64.b64encode(payload).decode("utf-8")
+KEY_PATH = KEYS_DIR / "vault.key"
+
+def _load_or_create_key() -> bytes:
+    if KEY_PATH.exists():
+        return KEY_PATH.read_bytes().strip()
+    key = Fernet.generate_key()
+    KEY_PATH.write_bytes(key)
+    # ensure not committed via .gitignore vault/keys/
+    return key
+
+def _fernet() -> Fernet:
+    key = _load_or_create_key()
+    return Fernet(key)
+
+def encrypt(payload: bytes, scope: str, key_ref: str = "default") -> str:
+    f = _fernet()
+    ct = f.encrypt(payload)
     scope_dir = VAULT_DIR / scope
     scope_dir.mkdir(parents=True, exist_ok=True)
-    # use key_ref as filename safe
     safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in key_ref)
     ref = f"vault://{scope}/{safe}"
-    (scope_dir / f"{safe}.enc").write_text(b64, encoding="utf-8")
+    (scope_dir / f"{safe}.enc").write_bytes(ct)
     return ref
 
 def decrypt(ref: str) -> bytes:
-    # ref like vault://AcceptedFact/<id>
     try:
         scope, name = ref.replace("vault://", "").split("/", 1)
     except ValueError:
         raise ValueError(f"invalid vault ref {ref}")
     p = VAULT_DIR / scope / f"{name}.enc"
-    b64 = p.read_text(encoding="utf-8")
-    return base64.b64decode(b64.encode("utf-8"))
+    ct = p.read_bytes()
+    f = _fernet()
+    return f.decrypt(ct)
 
 def is_encrypted_file_contains_plaintext(plaintext: str) -> bool:
-    """Helper for test: ensure no vault file contains plaintext."""
+    """Ensure no vault .enc file on disk contains plaintext (should be ciphertext)."""
     for f in VAULT_DIR.rglob("*.enc"):
-        b64 = f.read_text(encoding="utf-8")
+        raw = f.read_bytes()
+        if plaintext.encode("utf-8") in raw:
+            return True
+        # also check that decrypt would contain plaintext (expected inside decoded, but file is ciphertext)
         try:
-            decoded = base64.b64decode(b64).decode("utf-8")
-            if plaintext in decoded:
-                # plaintext is inside decoded payload (expected), but file on disk is b64 not plaintext
-                # check raw file contains plaintext (should not, because b64 not plaintext)
-                raw = f.read_text(encoding="utf-8")
-                if plaintext in raw:
-                    return True
+            dec = decrypt(f"vault://{f.parent.name}/{f.stem}")
+            # dec contains plaintext expected, but raw is ciphertext not plaintext — already checked
+            pass
         except Exception:
             continue
     return False

@@ -31,8 +31,9 @@ fixtures/local/
 # Logs
 *.log
 
-# Python cache / runtime vault data (AWP-003 HSS, not committed)
+# Python cache / runtime vault data (AWP-003 HSS, not committed) + keys (AWP-008 hardening)
 __pycache__/
 *.pyc
 vault/data/
+vault/keys/
 vault/__pycache__/
