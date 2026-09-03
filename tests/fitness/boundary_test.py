@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-boundary_test.py — AWP-002 IU-004
-Fitness: B-4 core not in jurisdiction, UF ban, labels never identifiers, L2 != L3
-Traceability: STAGE-8-PLAN-DELTA.md:6.2 CHG-011, RT-M01, AWP-002:12.5, 002:12.6
+boundary_test.py — AWP-008 IU-002 (upgraded from AWP-002)
+Fitness: B-4 core not in jurisdiction, UF ban, labels never identifiers, L2 != L3, MarketObs not in AssumptionSet, semgrep dynamic path
+Traceability: STAGE-8-PLAN-DELTA.md:6.2 CHG-011, RT-M01/H08, AWP-002:12.5/12.6, AWP-008:12.x
 """
 import re
 import sys
@@ -76,12 +76,75 @@ def test_L2_never_imports_L3():
         print("PASS L2->L3: no core schema imports jurisdiction (B-4 via propertyNames only)")
     return ok
 
+def test_marketobs_not_in_assumption():
+    """INV-08: MarketObs ref must not be valid as Assumption param."""
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from assumptions.registry import AssumptionRegistry
+    reg = AssumptionRegistry()
+    try:
+        reg.create_set([{"param": "UF", "value": 39405, "owner": "test", "justification": "test", "id": "1", "version": 1}], owner="Principal", justification="test")
+        print("FAIL MarketObs: UF as Assumption should REJECT (INV-08)")
+        return False
+    except ValueError:
+        print("PASS MarketObs: UF as Assumption correctly REJECT (INV-08)")
+        return True
+
+def test_semgrep_dynamic_path():
+    """Semgrep-like: detect dynamic Path construction for shared/client-profile.json beyond allowed docs."""
+    import re
+    ok = True
+    # Scan all python files except allowed docs
+    allowed = ["M0-forensics", "M0-answers", "schema-language", "vault-interface-stub", "client-profile-v0-to-v1", "validate_fixtures", "boundary_test"]
+    pattern = re.compile(r'Path\(.*client-profile\.json|shared/client-profile\.json')
+    for py in ROOT.rglob("*.py"):
+        txt = py.read_text(encoding="utf-8", errors="ignore")
+        if "client-profile.json" in txt:
+            # check if file is allowed
+            is_allowed = any(a in str(py) for a in allowed) or "decisions" in str(py) or "migrations" in str(py) or "fixtures" in str(py)
+            if not is_allowed and pattern.search(txt):
+                print(f"FAIL semgrep: {py.relative_to(ROOT)} contains dynamic client-profile.json path")
+                ok = False
+    if ok:
+        print("PASS semgrep: no dynamic client-profile.json path outside allowed docs")
+    return ok
+
+def test_L2_never_imports_L3_python():
+    """Python import-graph: L2 (hss, market, assumptions, engine, schema) never imports L3 (jurisdiction, risk_gate). Vault is allowed for HSS."""
+    import re
+    l2_modules = ["hss/", "market/", "assumptions/", "engine/", "lib/measure"]
+    prohibited = {
+        "hss": ["jurisdiction", "risk_gate"],
+        "market": ["jurisdiction"],
+        "assumptions": ["jurisdiction", "market"],
+        "engine": ["jurisdiction"],
+        "lib/measure": ["jurisdiction"],
+    }
+    ok = True
+    for mod_prefix in l2_modules:
+        mod_path = ROOT / mod_prefix.rstrip("/")
+        if not mod_path.exists():
+            continue
+        for py in mod_path.rglob("*.py"):
+            txt = py.read_text(encoding="utf-8", errors="ignore")
+            for bad in prohibited.get(mod_prefix.strip("/"), []):
+                # naive import check
+                if re.search(rf"^\s*from\s+{bad}\b|^\s*import\s+{bad}\b", txt, re.MULTILINE):
+                    print(f"FAIL L2->L3 python: {py.relative_to(ROOT)} imports {bad}")
+                    ok = False
+    if ok:
+        print("PASS L2 python: L2 never imports L3 / vault raw")
+    return ok
+
 def main():
     results = []
     results.append(("B-4", test_b4_core_no_jurisdiction()))
     results.append(("UF ban", test_uf_ban()))
     results.append(("labels", test_labels_never_identifiers()))
     results.append(("L2!=L3", test_L2_never_imports_L3()))
+    results.append(("L2 python", test_L2_never_imports_L3_python()))
+    results.append(("MarketObs", test_marketobs_not_in_assumption()))
+    results.append(("semgrep", test_semgrep_dynamic_path()))
     ok = all(r[1] for r in results)
     print("\n=== FITNESS SUMMARY: {} ===".format("PASS" if ok else "FAIL"))
     for name, res in results:
