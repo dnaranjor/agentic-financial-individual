@@ -32,7 +32,7 @@
   </p>
 </div>
 
-> ⚠️ **No es asesoría financiera.** Software educativo para organizar *tus propias* finanzas bajo reglas chilenas (CLP, UF, AFP, FONASA/ISAPRE, PGU, RSH). El humano (tú) siempre decide. Las recomendaciones nunca se ejecutan automáticamente.
+> ⚠️ **No es asesoría financiera profesional.** Toda asesoría descansa en modelos de Inteligencia Artificial (LLM). Se recomienda emplear un modelo de frontera para como Claude Opus 5 o GPT 5.6 Sol para mejores resultados. Software educativo para organizar *tus propias* finanzas bajo reglas chilenas (CLP, UF, AFP, FONASA/ISAPRE, PGU, RSH). El humano (tú) siempre decide. Las recomendaciones nunca se ejecutan automáticamente.
 
 ---
 
