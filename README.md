@@ -1,15 +1,6 @@
 # Agentic Financial Individual (AFI) — Tu asesor financiero personal (Chile)
 ### Your personal, model-first financial knowledge system for Chilean households
 
-> **Baseline:** `7625eb2` (hardening-v1) — 145 files — M0→M6 complete. Library-level Python, operational.
-> **Línea base:** `7625eb2` — Python a nivel de librería, operativo. Sin servidor, sin infraestructura externa.
-
-> ⚠️ **Not financial advice / No es asesoría financiera.** Educational software for organizing *your own* finances under Chilean rules (CLP, UF, AFP, FONASA/ISAPRE, PGU, RSH). The human (you) always decides. / Software educativo para organizar *tus propias* finanzas bajo reglas chilenas. El humano (tú) siempre decide.
-
-**Works on:** Python 3.10.11 + `pip install -r requirements.txt` (`pydantic>=2.12.3`, `cryptography>=48.0.0`, `jsonschema>=4.26.0`, `pytest>=9.1.1`). License: `GPL-3.0` — see `LICENSE`. Forking for personal use means your fork stays GPL-3.0 if you distribute it.
-
----
-
 ## Table of contents / Índice
 
 1. [What this is / Qué es](#1-what-this-is--qué-es)
