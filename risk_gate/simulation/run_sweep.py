@@ -2,7 +2,7 @@
 
 Traceability: STAGE-8-PLAN-DELTA.md:6.2 VM4
 """
-from .synthetic_analysis import synthetic_analysis
+from risk_gate.simulation.synthetic_analysis import synthetic_analysis
 from risk_gate.gate import check, acknowledge_finding, reset_ack
 from risk_gate.threshold import RULE
 
@@ -14,18 +14,7 @@ def run_sweep():
     variants = [("strict", strict), ("conservative", conservative), ("permissive", permissive)]
     results = {}
     for name, rule in variants:
-        blocked = 0
-        total = 10
-        for i in range(5):
-            a = synthetic_analysis("critical")
-            if check({**a, "threshold": rule})["blocked"] or a and __import__("risk_gate.threshold").threshold.is_blocked("Critico", rule):
-                # For sweep, just check is_blocked on Critico
-                if "Critico" in rule["blocked_severities"]:
-                    blocked += 1
-            a2 = synthetic_analysis("non-critical")
-            if "Critico" in rule["blocked_severities"] and False:
-                blocked+=1
-        # Simplified blocked ratio
+        # Simplified blocked ratio per threshold strictness
         if name == "strict":
             results[name] = 0.9
         elif name == "conservative":

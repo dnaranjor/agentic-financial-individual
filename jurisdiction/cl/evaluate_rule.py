@@ -11,8 +11,8 @@ from .rules import get_rule
 
 # Synthetic persons for demo — in real, would query HSS
 PERSONS = {
-    "principal": {"id": "principal", "birthDate": date(1969, 3, 15), "nationality": "chilena", "rsh_bracket_pct": 100, "residency_years": 40},
-    "spouse": {"id": "spouse", "birthDate": date(1970, 6, 20), "nationality": "venezolana", "rsh_bracket_pct": 70, "residency_years": 10},
+    "principal": {"id": "principal", "birthDate": date(1959, 3, 15), "nationality": "chilena", "rsh_bracket_pct": 100, "residency_years": 40},
+    "spouse": {"id": "spouse", "birthDate": date(1961, 6, 20), "nationality": "venezolana", "rsh_bracket_pct": 70, "residency_years": 25},
 }
 
 def evaluate_rule(rule_id: str, person_id: str, as_of: date) -> dict:
