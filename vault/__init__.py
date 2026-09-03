@@ -35,7 +35,14 @@ def encrypt(payload: bytes, scope: str, key_ref: str = "default") -> str:
     safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in key_ref)
     ref = f"vault://{scope}/{safe}"
     (scope_dir / f"{safe}.enc").write_bytes(ct)
+    try:
+        from lib.observability.logger import log_event as _log
+
+        _log("vault.encrypt", scope=scope, key_ref=safe, bytes=len(payload), ref=ref)
+    except Exception:
+        pass
     return ref
+
 
 def decrypt(ref: str) -> bytes:
     try:
@@ -45,7 +52,14 @@ def decrypt(ref: str) -> bytes:
     p = VAULT_DIR / scope / f"{name}.enc"
     ct = p.read_bytes()
     f = _fernet()
-    return f.decrypt(ct)
+    data = f.decrypt(ct)
+    try:
+        from lib.observability.logger import log_event as _log
+
+        _log("vault.decrypt", scope=scope, key_ref=name, bytes=len(data), ref=ref)
+    except Exception:
+        pass
+    return data
 
 def is_encrypted_file_contains_plaintext(plaintext: str) -> bool:
     """Ensure no vault .enc file on disk contains plaintext (should be ciphertext)."""

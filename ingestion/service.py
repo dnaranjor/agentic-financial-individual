@@ -42,6 +42,14 @@ class IngestionService:
             "ontologyVersion": "v1",
             "id": str(uuid.uuid4()),
         }
+        # AWP-013 IU-003 observability — log without plaintext text/value
+        try:
+            from lib.observability.logger import log_event as _log
+            import hashlib as _hl
+
+            _log("ingestion.extract", scope="Ingestion", confidence=confidence, discrepancyFlag=is_injection, evidenceHash=evidence_hash[:12], value_hash=_hl.sha256(value.encode()).hexdigest()[:12] if isinstance(value, str) else None)
+        except Exception:
+            pass
         # Propose-only: caller must send proposal to HSS for validation, not write directly
         # If injection, HSS validation should reject fact creation, but proposal itself is allowed with flag
         return proposal

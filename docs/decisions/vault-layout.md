@@ -28,13 +28,20 @@ All to be **encrypted-at-write from AWP-003 onward** (`STAGE-8-PLAN-DELTA.md:8.1
 
 ---
 
-## Next Steps (not at 000B)
+## Next Steps (not at 000B) — Updated at AWP-013 IU-002 (2026-09-03, pre-pilot hardening)
 
-*   `AWP-002` — create `vault/` interface stub `spec/vault-interface.md` defining `vault.encrypt(path)` / `vault.decrypt` / `vault.backup` (GAP-037 durability)
-*   `AWP-003` — HSS encrypted-at-write via stub (`X 003:14` cutover)
-*   `AWP-008` — vault hardening + whitelist `docs/privacy/projection-whitelist.md` + `tests/fitness/boundary_test.py`
+*   `AWP-002` — create `vault/` interface stub `spec/vault-interface.md` defining `vault.encrypt(path)` / `vault.decrypt` / `vault.backup` (GAP-037 durability) — **DONE**: stub `docs/decisions/vault-interface-stub.md:14` + impl `vault/__init__.py:30` Fernet.
+*   `AWP-003` — HSS encrypted-at-write via stub (`X 003:14` cutover) — **DONE**: `hss/store.py:54` `vault.encrypt(payload, scope="AcceptedFact", key_ref=fact.id)` + `hss/service.py:51` Snapshot encrypt.
+*   `AWP-008` — vault hardening + whitelist `docs/privacy/projection-whitelist.md` + `tests/fitness/boundary_test.py` — **DONE**: `.gitignore:37-38` `vault/data/` `vault/keys/` ignored, Fernet hardening `vault/__init__.py:9`.
+*   `AWP-013` — **Durability hardening (M7, pre-pilot)** — `hss/store.py:89` `BitemporalStore.load_from_vault()` decrypts `vault/data/AcceptedFact/*.enc` sorted by `recordedAt` with autoclosure replay + corrupt-skip logged to `reports/afi.log` via `lib/observability/logger.py`; `hss/backup.py:9` `backup`/`restore` real vault replay byte-identical (INV-15 GAP-037). `hss/service.py:16` `load_from_vault` flag for restart recovery. Verified via `tests/test_durability_reload.py:1`.
 
-*This file is `000B:12.7` acceptance artifact — vault layout inputs filed, `.gitignore` still passes post-purge.*
+### Key Backup & Rotation — Manual (pre-pilot, not automated HSM)
+
+*   **Backup (before pilot):** `mkdir -p ~/.afi/backup && cp vault/keys/vault.key ~/.afi/backup/vault.key.$(date -I)` — store offline, never git. Doc here is manual procedure, approved per AWP-013 user decision 2026-09-03 "Before Pilot". `.gitignore:38` guarantees `vault/keys/` never tracked (`git ls-files vault/keys` empty).
+*   **Restore / new device:** `VAULT_DIR` is `vault/data` (`vault/__init__.py:11`) `KEYS_DIR` `vault/keys`; set `VAULT_DIR` env or pass `vault_dir` to `BitemporalStore.load_from_vault(vault_dir=Path(...))`. On new host: copy `vault.key` to `vault/keys/vault.key` with `0400`, then `store.load_from_vault()` before `query(validAt,asOf)` — `restore` in `hss/backup.py:17` validates byte-identical.
+*   **Rotation (not yet justified, doc only):** Generate new key `Fernet.generate_key()`, iterate `vault/data/**/*.enc` `decrypt(old)` → `encrypt(new)` per file with same `key_ref`, replace `vault.key`, keep old backup 30d. Not executed at AWP-013.
+
+*This file is `000B:12.7` acceptance artifact updated at `AWP-013:12.x` — vault layout inputs filed + durability hardened, `.gitignore` still passes post-purge.*
 
 ---
 

@@ -12,6 +12,12 @@ def check_staleness(observations: List[dict], now: datetime = None) -> List[dict
         staleness = o.get("staleness", "observed")
         if staleness == "stale":
             findings.append({"severity": "Medio", "triggeredBy": [o.get("series", "unknown")], "description": f"Staleness {o.get('series')} is stale"})
+    try:
+        from lib.observability.logger import log_event as _log
+
+        _log("monitoring.drift", scope="Monitoring", check="staleness", findings=len(findings), observed=len(observations))
+    except Exception:
+        pass
     return findings
 
 def baseline_vs_current(baseline: dict, current: dict) -> dict:
@@ -25,6 +31,11 @@ def baseline_vs_current(baseline: dict, current: dict) -> dict:
             continue
         if abs(cv - bv) / max(abs(bv), 1) > 0.05:
             drift.append({"id": did, "baseline": bv, "current": cv, "driftPct": (cv-bv)/bv})
-    if drift:
-        return {"drift": drift, "severity": "Medio"}
-    return {"drift": [], "severity": "Bajo"}
+    res = {"drift": drift, "severity": "Medio"} if drift else {"drift": [], "severity": "Bajo"}
+    try:
+        from lib.observability.logger import log_event as _log
+
+        _log("monitoring.drift", scope="Monitoring", check="baseline_vs_current", drift=len(drift), severity=res["severity"])
+    except Exception:
+        pass
+    return res

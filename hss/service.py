@@ -16,8 +16,11 @@ import vault
 class HouseholdStateService:
     """Sole writer of household facts. Validates via schema/registry/accepted-fact.json."""
 
-    def __init__(self, store: BitemporalStore = None):
+    def __init__(self, store: BitemporalStore = None, load_from_vault: bool = False):
         self.store = store or BitemporalStore()
+        if load_from_vault:
+            # AWP-013 IU-002 — durability: restore in-memory from vault/data on init
+            self.store.load_from_vault()
 
     def accept_claim(self, claim_id: str, valid_from: date, value: dict, recorded_at: datetime = None, valid_to: date = None, now_dt: datetime = None) -> AcceptedFact:
         # Schema validation via registry (jsonschema) — lightweight
