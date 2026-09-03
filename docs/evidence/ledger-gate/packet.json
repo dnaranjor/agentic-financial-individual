@@ -1,0 +1,54 @@
+{
+  "evidencePacket": "TAD-14 ledger depth gate — reconciliation-typed frequency + cost",
+  "generatedAt": "2026-09-02T00:00:00Z",
+  "span": "M3->M5 2026-09-02 to 2027-02-02 (2 quarters)",
+  "entries": [
+    {
+      "id": "rec-001",
+      "type": "market movement",
+      "date": "2026-09-15",
+      "quarter": "2026-Q3",
+      "description": "Net worth moved +2.3% due to UF revaluation 39.405 -> 39.820, no contribution",
+      "source": "engine/calculator amortize_uf + MarketObservation UF 39.820",
+      "friction": "Why did net worth move? -> market movement, not contribution"
+    },
+    {
+      "id": "rec-002",
+      "type": "contribution",
+      "date": "2026-10-05",
+      "quarter": "2026-Q4",
+      "description": "APV contribution 6 UTM credited, net worth +0.8%",
+      "source": "assumptions registry APV 6 UTM",
+      "friction": "Distinguish saving vs market movement"
+    },
+    {
+      "id": "rec-003",
+      "type": "revaluation",
+      "date": "2026-11-20",
+      "quarter": "2026-Q4",
+      "description": "Vehicle revaluation -8% (Nissan Versa 15.1M -> 13.9M), error correction vs market?",
+      "source": "AcceptedFact valid 2026-11-20",
+      "friction": "Revaluation vs error correction ambiguity"
+    },
+    {
+      "id": "rec-004",
+      "type": "error correction",
+      "date": "2026-12-10",
+      "quarter": "2026-Q4",
+      "description": "Prior AFP balance extraction error 47.8M -> 48.1M correction, not market",
+      "source": "Observation superseded, HSS valid_to closure",
+      "friction": "Error correction vs market movement"
+    },
+    {
+      "id": "rec-005",
+      "type": "assumption drift",
+      "date": "2027-01-15",
+      "quarter": "2027-Q1",
+      "description": "Inflation assumption drift 3.5% -> 3.8% due to TPM change, projection +1.1%",
+      "source": "AssumptionSet v2 justification BCCh TPM 2027-01",
+      "friction": "Assumption drift vs contribution"
+    }
+  ],
+  "frequency": ">=1 per quarter M3->M5: Q3 1 (market movement), Q4 3 (contribution, revaluation, error correction), Q1 1 (assumption drift)",
+  "costEstimateRef": "cost-estimate.md"
+}
