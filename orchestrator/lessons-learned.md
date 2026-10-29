@@ -12,3 +12,10 @@ Format:
 - New rules added: <count>
 - Notes: <free text>
 ```
+
+## [2026-10-28 07:20] incidente-tasa-almacenada
+- Mode: guidance (B, sin subagentes)
+- Agents invoked: []
+- Outcome: error (corregido al turno siguiente)
+- New rules added: 1
+- Notes: pregunta de pago respondida de memoria con una tasa supuesta en vez de la tasa de cuenta almacenada en el perfil; agregado chequeo previo liviano.
