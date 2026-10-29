@@ -12,6 +12,7 @@ Run after every execution and on `Learn!`:
 - [ ] On first run, was the baseline auto-generated?
 - [ ] On `Learn!`, did every agent confirm its self-improvement cycle?
 - [ ] Were any new failure modes encountered that warrant a new rule?
+- [ ] ¿Usé el dato del perfil (búsqueda dirigida) o declaré el supuesto?
 
 ## Auto-Learned Rules
 
@@ -21,3 +22,4 @@ Run after every execution and on `Learn!`:
 - [2026-06-02] Always check `shared/baseline-report.md` existence before responding to first user prompt; if absent, force baseline pipeline regardless of intent.
 - [2026-06-02] Spanish keyword "reporte" alone is ambiguous; require "completo", "full", or "generar" to classify as `full_report` to avoid expensive runs on casual mentions.
 - [2026-06-02] When intent is `ingest_files`, never dispatch Data Analyst until User Profile Agent has merged extracted evidence.
+- [2026-10-28] Si la respuesta depende de datos personales o financieros del usuario, haz un grep dirigido en `shared/client-profile.json` y `shared/assumptions.md` antes de responder (nunca el archivo completo); usa el valor del perfil o declara el supuesto, menciónalo y registra una línea en `shared/interaction-history.md`. En Mode B aplica también sin subagentes. Nunca un supuesto genérico si el perfil ya tiene el dato (p. ej. una tasa de cuenta almacenada).

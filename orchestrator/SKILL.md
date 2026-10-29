@@ -116,9 +116,20 @@ User → Orchestrator
 ```
 User: "¿debo cambiar mi AFP del fondo B al C?"
   → classify_user_intent → "question_quick"
+  → pre-answer check when the answer depends on the user's personal/financial data
+    (required even if the orchestrator answers without subagents)
   → dispatch minimal set: Data Analyst + Trading Analyst + Risk Evaluation
   → compose_spanish_response (concise) → User
 ```
+
+### Pre-answer check (per turn)
+
+Run this before answering whenever the reply depends on the user's personal or financial data. Mode B requires it even when no specialist is dispatched. Skip it for general questions that do not depend on that data.
+
+1. Targeted keyword search only, in `shared/client-profile.json` and `shared/assumptions.md`. Never read those files whole, and do not re-read text already loaded in this turn. Example: `rg -i "<keyword>" shared/client-profile.json shared/assumptions.md`. For `shared/interaction-history.md`, read only the latest entries, and only when they are relevant.
+2. Use the value stored in the profile, or explicitly declare the assumption. Do not answer from memory with a stand-in figure when the profile already stores the value (for example, a stored account rate).
+3. Mention in the reply, in one line, which profile data was used.
+4. Append one line to `shared/interaction-history.md` (follow the header format in that file).
 
 ### Mode C — Full Report on Demand
 
@@ -167,6 +178,7 @@ correlation_id: <uuid>
 2. Read the `## Auto-Learned Rules` section in full.
 3. Apply DO/DON'T rules (e.g., routing heuristics, agent ordering pitfalls).
 4. Track which rules were applied as verification evidence.
+5. Run the pre-answer check above when the answer depends on the user's personal/financial data.
 
 **AFTER execution (and on every `Learn!`):**
 1. Run the `## Compliance Self-Check` checklist in `knowledge-base.md`.
